@@ -13,6 +13,14 @@ The first step is to build the image.
 cd alphavantage-demo
 docker build -t [tag] .
 ```
+To test the above image, you can run the following command
+```
+docker run -p 5001:5000 -e API_KEY=XXXXXXXXXXXX \
+ -e SYMBOL=MSFT \
+-e NDAYS=7 \
+[tag]
+```
+The 5001 port can be any available port you'd like. You should then be able to see the results on http://localhost:5001
 
 ## NGINX
 Minikube: use the following command to enable ingress
@@ -36,7 +44,7 @@ Once this has been setup, you should be able to navigate to `http://alphavantage
 NOTE: for `https://alphavantage.local` to work as well, you will need to add this to your /etc/hosts file, so `127.0.0.1 alphavantage.local`
 
 ## Monitoring
-A simple prometheus scraping can be found under http://alphavantage.local/metrics 
+A simple prometheus scraping can be found under http://alphavantage.local/metrics
 
 ### About alphavantage-demo chart
 Templates containes all the definitions, including ConfigMap and Secrets. Currently the secret value is set in base64, but this could be changed to use a secret provider like Vault. The values for ConfigMap and name of the ingress can be changed in the values.yaml file. Image name can also be set in values.yaml file

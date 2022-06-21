@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alphavantage-ingress
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: alphavantage-demo
+      port:
+        number: 6000
+  rules:
+  - host: {{ .Values.ingress.host }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: alphavantage-demo
+            port:
+              number: 6000

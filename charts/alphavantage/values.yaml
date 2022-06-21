@@ -1,0 +1,11 @@
+# alphavantage-demo
+
+image: alphavantage:flask
+
+symbol: MSFT
+ndays: 7
+
+ingress:
+  host: alphavantage.local
+
+

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alphavantage-demo
+spec:
+  selector:
+    matchLabels:
+      app: alphavantage-demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alphavantage-demo
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/alphavantage-cm.yaml") . | sha256sum }}
+    spec:
+      containers:
+      - name: alphavantage-demo
+        image: {{ .Values.image }}
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+          - name: SYMBOL
+            valueFrom:
+              configMapKeyRef:
+                name: alphavantage-cm
+                key: symbol
+          - name: NDAYS
+            valueFrom:
+              configMapKeyRef:
+                name: alphavantage-cm
+                key: ndays
+          - name: API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: alphavantage-secret
+                key: api_key

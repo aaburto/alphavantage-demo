@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alphavantage-cm
+data:
+  symbol: "{{ .Values.symbol }}"
+  ndays: "{{  .Values.ndays }}"
